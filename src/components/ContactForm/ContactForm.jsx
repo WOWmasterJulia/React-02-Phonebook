@@ -5,7 +5,7 @@ import css from './ContactForm.module.css'
 
 const INITIAL_STATE = {
   name: "",
-  number:"",
+  number: "",
 };
 const nameInputId = nanoid();
 const numberInputId = nanoid();
@@ -23,24 +23,16 @@ export class ContactForm extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
    const { name, number } = this.state;
-   // console.log(`Login: ${login}, Email: ${email}, Password: ${password}`);
-    const temp = {
-      id: nanoid(3),
+    const data = {
+      id: nanoid(5),
       name: name,
       number: number,
     }
-  //  console.log("temp", temp)
     this.setState({contacts : this.state.contacts})
-    this.props.getContact( temp );
-//    this.reset();
+    this.props.getContact( data );
     this.setState({ ...INITIAL_STATE });
   };
   
-  reset = () => {
-    this.setState({ ...INITIAL_STATE });
-    };
-
-
   render() {
     const { name, number } = this.state;
 

@@ -8,15 +8,24 @@ export class App extends Component {
     contacts: [],
     filter:'',
   }
-
+// Запись контактов с проверкой на повторы 
   saveContact = item => {
-    this.state.contacts.push(item)
-    console.log("app- item", this.state.contacts );
-    this.setState({ contacts: this.state.contacts })
-  }
+    if (this.state.contacts.find(elem => elem.name === item.name)) {
+      alert(`${item.name} is already in contacts.`)
+    } else {
+      this.state.contacts.push(item)
+      this.setState({ contacts: this.state.contacts })
+    }
+  };
+// Фильтр поиска кконтакта по имени
   findChange = evt => {
     this.setState({ filter: evt.currentTarget.value })
-  }
+  };
+// Удаление контакта из списка
+  deleteItem = id => {
+    const idContact = this.state.contacts.findIndex(contact => contact.id === id);
+    this.setState({ contact: this.state.contacts.splice(idContact, 1) })
+  };
 
   render() {
     const { contacts, filter } = this.state;
@@ -27,7 +36,7 @@ export class App extends Component {
         <ContactForm getContact={this.saveContact} />
         <h2>Contacts</h2>
         <ContactFind find={filter} findChange={this.findChange} />
-        <ContactList contacts={filteredContacts} />
+        <ContactList contacts={filteredContacts} deleteItem={this.deleteItem} />
       </div>
     )
   }
